@@ -1,7 +1,7 @@
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { WithQuery } from '../../../shared/store/HOCs/WithQuery';
 import { useProducts } from '../../../shared/store/hooks/useProducts';
-import { ButtonBack } from '../../../shared/ui/ButtonBack';
+import { ButtonBack } from '../../../features/ButtonBack';
 import { CardList } from '../../../widgets/CardList';
 
 const CardListWithQuery = WithQuery(CardList);

@@ -1,16 +1,18 @@
 import classNames from 'classnames';
 import s from './Card.module.css';
-import { Price } from './Price/ui/Price';
 import { Link } from 'react-router-dom';
-import { LikeButton } from '../../LikeButton';
-import { useAppSelector } from '../../../store/utils';
-import { cartSelectors } from '../../../store/slices/cart';
-import { useAddToCart } from '../../../hooks/useAddToCart';
+import { LikeButton } from '../../../shared/ui/LikeButton';
+import { useAppSelector } from '../../../shared/store/utils';
+import { cartSelectors } from '../../../shared/store/slices/cart';
+import { useAddToCart } from '../../../shared/hooks/useAddToCart';
+import { Price } from '../../../shared/ui/Price';
+import { Button } from '../../../shared/ui/Button';
 import { CartCounter } from '../../CartCounter';
 
 type CardProps = {
 	product: Product;
 };
+
 export const Card = ({ product }: CardProps) => {
 	const { discount, price, name, tags, id, images } = product;
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
@@ -54,16 +56,16 @@ export const Card = ({ product }: CardProps) => {
 			{isProductInCart ? (
 				<CartCounter productId={id} />
 			) : (
-				<button
-					onClick={() => addProductToCart({ ...product, count: 1 })}
+				<Button
+					onclick={() => addProductToCart({ ...product, count: 1 })}
 					disabled={isProductInCart}
 					className={classNames(
 						s['card__cart'],
 						s['card__btn'],
 						s['card__btn_type_primary']
-					)}>
-					В корзину
-				</button>
+					)}
+					text={'В корзину'}
+				/>
 			)}
 		</article>
 	);

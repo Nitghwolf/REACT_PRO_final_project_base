@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
-import { cartActions, cartSelectors } from '../../../store/slices/cart';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../store/utils';
+import { useAppSelector } from '../../../shared/store/utils';
+import { cartActions, cartSelectors } from '../../../shared/store/slices/cart';
 
-const MIN_COUNT = 1;
+const MIN_COUNT = 0;
 const MAX_COUNT = 99;
 
 export const useCount = (productId: string) => {

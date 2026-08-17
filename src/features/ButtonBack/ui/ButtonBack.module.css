@@ -1,0 +1,5 @@
+.buttonBack {
+    display: flex;
+    width: max-content;
+    margin: 0.5rem;
+}

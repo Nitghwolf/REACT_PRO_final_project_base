@@ -9,6 +9,7 @@ import {
 	IErrorResponse,
 } from '../../../store/api/productsApi';
 import { toast } from 'react-toastify';
+import { Button } from '../../Button';
 
 type TLikeButtonProps = {
 	product: Product;
@@ -41,12 +42,12 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
 	};
 
 	return (
-		<button
+		<Button
 			className={classNames(s['card__favorite'], {
 				[s['card__favorite_is-active']]: isLike,
 			})}
-			onClick={toggleLike}>
-			<LikeSvg />
-		</button>
+			onclick={toggleLike}
+			icon={<LikeSvg />}
+		/>
 	);
 };

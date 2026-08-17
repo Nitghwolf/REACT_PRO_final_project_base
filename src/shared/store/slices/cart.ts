@@ -22,10 +22,16 @@ export const cartSlice = createSlice({
 			state,
 			action: PayloadAction<Pick<CartProduct, 'id' | 'count'>>
 		) {
-			state.products = state.products.map((p) => ({
-				...p,
-				count: p.id === action.payload.id ? action.payload.count : p.count,
-			}));
+			if (action.payload.count === 0) {
+				state.products = state.products.filter(
+					(p) => p.id !== action.payload.id
+				);
+			} else {
+				state.products = state.products.map((p) => ({
+					...p,
+					count: p.id === action.payload.id ? action.payload.count : p.count,
+				}));
+			}
 		},
 	},
 	selectors: {
