@@ -39,7 +39,6 @@ input[type='number'],
 input[type='number']:hover,
 input[type='number']:focus {
 	appearance: textfield;
-	appearance: none;
 }
 
 .button_type_primary {
@@ -121,4 +120,5 @@ input[type='number']:focus {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	padding-bottom: 20px;
 }

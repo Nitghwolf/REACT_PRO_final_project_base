@@ -10,11 +10,14 @@ import {
 } from '../../../shared/store/api/productsApi';
 import { toast } from 'react-toastify';
 import { Button } from '../../../shared/ui/Button';
+import { memo, useCallback } from 'react';
 
 type TLikeButtonProps = {
 	product: Product;
 };
-export const LikeButton = ({ product }: TLikeButtonProps) => {
+export const LikeButton = memo(function LikeButton({
+	product,
+}: TLikeButtonProps) {
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 	const user = useAppSelector(userSelectors.getUser);
 
@@ -23,7 +26,7 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
 
 	const isLike = product?.likes.some((l) => l.userId === user?.id);
 
-	const toggleLike = async () => {
+	const toggleLike = useCallback(async () => {
 		if (!accessToken) {
 			toast.warning('Вы не авторизованы');
 			return;
@@ -39,7 +42,7 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
 			const error = response.error as IErrorResponse;
 			toast.error(error.data.message);
 		}
-	};
+	}, [accessToken, deleteLike, product.id, isLike, setLike]);
 
 	return (
 		<Button
@@ -50,4 +53,4 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
 			icon={<LikeSvg />}
 		/>
 	);
-};
+});

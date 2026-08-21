@@ -1,15 +1,24 @@
 import s from '../../../pages/CartPage/ui/CardPage.module.css';
 import classNames from 'classnames';
+import { Button } from '../../../shared/ui/Button';
+import { useMemo } from 'react';
 
 type CardAmountProps = {
 	products: CardProduct[];
 };
 export const CardAmount = ({ products }: CardAmountProps) => {
-	const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
-	const allDiscount = products.reduce(
-		(acc, p) => p.discount * p.count + acc,
-		0
-	);
+	const orders = useMemo(() => {
+		return products.reduce(
+			(acc, p) => {
+				return {
+					...acc,
+					allPrice: p.price * p.count + acc.allPrice,
+					allDiscount: p.discount * p.count + acc.allDiscount,
+				};
+			},
+			{ allPrice: 0, allDiscount: 0 }
+		);
+	}, [products]);
 
 	const handleSubmitCart = () => {
 		const order = products.map((p) => ({ id: p.id, count: p.count }));
@@ -25,7 +34,7 @@ export const CardAmount = ({ products }: CardAmountProps) => {
 						{`Товары (${products.length})`}
 					</span>
 					<span className={classNames(s['cart-amount__table-value'])}>
-						{`${allPrice} ₽`}
+						{`${orders.allPrice} ₽`}
 					</span>
 				</div>
 				<div className={classNames(s['cart-amount__table-row'])}>
@@ -37,7 +46,7 @@ export const CardAmount = ({ products }: CardAmountProps) => {
 							s['cart-amount__table-value'],
 							s['cart-amount__table-value-discount']
 						)}>
-						{`${allDiscount} ₽`}
+						{`${orders.allDiscount} ₽`}
 					</span>
 				</div>
 			</div>
@@ -46,18 +55,18 @@ export const CardAmount = ({ products }: CardAmountProps) => {
 					Общая стоимость
 				</h2>
 				<span className={classNames(s['cart-amount__total-cost-value'])}>
-					{`${allPrice - allDiscount} ₽`}
+					{`${orders.allPrice - orders.allDiscount} ₽`}
 				</span>
 			</div>
-			<button
-				onClick={handleSubmitCart}
+			<Button
+				onclick={handleSubmitCart}
 				className={classNames(
 					s['button'],
 					s['button_type_primary'],
 					s['button_type_wide']
-				)}>
-				Оформить заказ
-			</button>
+				)}
+				text={'Оформить заказ'}
+			/>
 		</div>
 	);
 };

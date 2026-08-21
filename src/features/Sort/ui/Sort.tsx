@@ -1,13 +1,16 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useSort } from '../hooks/useSort';
 import s from './Sort.module.css';
 
 export const Sort = () => {
 	const { sort, setSort, sortParams } = useSort();
-	const handleSortSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-		const newSort = e.target.value as Sort;
-		setSort(newSort);
-	};
+	const handleSortSelect = useCallback(
+		(e: ChangeEvent<HTMLSelectElement>) => {
+			const newSort = e.target.value as Sort;
+			setSort(newSort);
+		},
+		[setSort]
+	);
 
 	return (
 		<select

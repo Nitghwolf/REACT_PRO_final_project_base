@@ -3,6 +3,7 @@ import { WithQuery } from '../../../shared/store/HOCs/WithQuery';
 import { useProducts } from '../../../shared/store/hooks/useProducts';
 import { ButtonBack } from '../../../features/ButtonBack';
 import { CardList } from '../../../widgets/CardList';
+import s from './FavoritesPage.module.css';
 
 const CardListWithQuery = WithQuery(CardList);
 
@@ -10,8 +11,7 @@ export const FavoritesPage = WithProtection(() => {
 	const { isLoading, isError, products, error } = useProducts();
 
 	return (
-		<>
-			<br />
+		<div className={s['favoritesPage']}>
 			<ButtonBack />
 			<CardListWithQuery
 				title='Избранные'
@@ -20,6 +20,6 @@ export const FavoritesPage = WithProtection(() => {
 				products={products}
 				error={error}
 			/>
-		</>
+		</div>
 	);
 });

@@ -64,8 +64,6 @@ export const router = createBrowserRouter([
 				path: RoutePath.signin,
 				element: <SignInPage />,
 			},
-
-			// last route
 			{
 				path: RoutePath.not_found,
 				element: <NotFoundPage />,

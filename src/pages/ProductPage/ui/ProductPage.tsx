@@ -9,10 +9,11 @@ import { LikeButton } from '../../../features/LikeButton';
 import { ReviewList } from '../../../widgets/ReviewList/ui/ReviewList';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { useGetProductQuery } from '../../../shared/store/api/productsApi';
-import { useAppSelector } from '../../../shared/store/utils';
-import { cartSelectors } from '../../../shared/store/slices/cart';
 import { CardCounter } from '../../../features/CardCounter';
-import { ProductCardCounter } from '../../../features/ProductCardCounter';
+import { Button } from '../../../shared/ui/Button';
+import { cartSelectors } from '../../../shared/store/slices/cart';
+import { useAppSelector } from '../../../shared/store/utils';
+import { useAddToCart } from '../../../shared/hooks/useAddToCart';
 
 export const ProductPage = WithProtection(() => {
 	const location = useLocation();
@@ -20,6 +21,7 @@ export const ProductPage = WithProtection(() => {
 	const productId = pathname.split('/').at(-1) || '';
 
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
+	const { addProductToCart } = useAddToCart();
 
 	const { data: product } = useGetProductQuery({ id: productId });
 
@@ -32,7 +34,7 @@ export const ProductPage = WithProtection(() => {
 	const isProductInCart = !!cartProducts.find((p) => p.id === id);
 
 	return (
-		<>
+		<div className={s['productPage']}>
 			<ButtonBack />
 			<h1 className={classNames(s['header-title'])}>{name}</h1>
 			<p className='acticul'>
@@ -44,6 +46,9 @@ export const ProductPage = WithProtection(() => {
 					<img src={images} alt={description} />
 				</div>
 				<div className={classNames(s['product__desc'])}>
+					<div className={s['likeButton-wrap']}>
+						<LikeButton product={product} />
+					</div>
 					<div className={classNames(s['price-big'], s['price-wrap'])}>
 						<span className={classNames(s['price_old'], s['price_left'])}>
 							{`${price} ₽`}
@@ -56,10 +61,18 @@ export const ProductPage = WithProtection(() => {
 					{isProductInCart ? (
 						<CardCounter productId={id} />
 					) : (
-						<ProductCardCounter product={product} />
+						<Button
+							onclick={() => addProductToCart({ ...product, count: 1 })}
+							disabled={isProductInCart}
+							className={classNames(
+								s['card__cart'],
+								s['card__btn_type_primary'],
+								s['card__btn']
+							)}
+							text={'В корзину'}
+						/>
 					)}
 
-					<LikeButton product={product} />
 					<div className={classNames(s['product__delivery'])}>
 						<img src={truckSVG} alt='truck' />
 						<div className={classNames(s['product__right'])}>
@@ -72,7 +85,6 @@ export const ProductPage = WithProtection(() => {
 							<p className={classNames(s['product__text'])}>
 								Доставка в пункт выдачи —
 								<span className={classNames(s['product__bold'])}>
-									{' '}
 									от 199 ₽
 								</span>
 							</p>
@@ -93,9 +105,10 @@ export const ProductPage = WithProtection(() => {
 					</div>
 				</div>
 			</div>
+
 			<div className={classNames(s['product__box'])}>
 				<h2 className={classNames(s['product__title'])}>Описание</h2>
-				<p className={classNames(s['product__subtitle'])}>Описание demo</p>
+				<p className={classNames(s['product__subtitle'])}>{description}</p>
 				<h2 className={classNames(s['product__title'])}>Характеристики</h2>
 				<div className={classNames(s['product__grid'])}>
 					<div className={classNames(s['product__naming'])}>Вес</div>
@@ -104,7 +117,7 @@ export const ProductPage = WithProtection(() => {
 					</div>
 					<div className={classNames(s['product__naming'])}>Цена</div>
 					<div className={classNames(s['product__description'])}>
-						490 ₽ за 100 грамм
+						{price} руб.
 					</div>
 					<div className={classNames(s['product__naming'])}>Польза</div>
 					<div className={classNames(s['product__description'])}>
@@ -126,6 +139,6 @@ export const ProductPage = WithProtection(() => {
 				</div>
 			</div>
 			<ReviewList product={product} />
-		</>
+		</div>
 	);
 });

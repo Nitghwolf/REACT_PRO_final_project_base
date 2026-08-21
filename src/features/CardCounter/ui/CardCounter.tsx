@@ -3,11 +3,15 @@ import s from './CardCounter.module.css';
 import classNames from 'classnames';
 import { Button } from '../../../shared/ui/Button';
 import { Input } from '../../../shared/ui/Input';
+import { memo } from 'react';
 
 type TCartCounter = {
 	productId: string;
 };
-export const CardCounter = ({ productId }: TCartCounter) => {
+
+export const CardCounter = memo(function CardCounter({
+	productId,
+}: TCartCounter) {
 	const { count, stock, handleSetCount, handleIncrement, handleDecrement } =
 		useCount(productId);
 
@@ -34,4 +38,4 @@ export const CardCounter = ({ productId }: TCartCounter) => {
 			</div>
 		</>
 	);
-};
+});
