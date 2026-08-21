@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {
-	products: CartProduct[];
+	products: CardProduct[];
 }
 
 const createInitState = (): CartState => ({
@@ -12,15 +12,15 @@ export const cartSlice = createSlice({
 	name: 'cart',
 	initialState: createInitState(),
 	reducers: {
-		addCartProduct(state, action: PayloadAction<CartProduct>) {
+		addCartProduct(state, action: PayloadAction<CardProduct>) {
 			state.products = [...state.products, action.payload];
 		},
-		deleteCartProduct(state, action: PayloadAction<CartProduct['id']>) {
+		deleteCartProduct(state, action: PayloadAction<CardProduct['id']>) {
 			state.products = state.products.filter((p) => p.id !== action.payload);
 		},
 		setCartProductCount(
 			state,
-			action: PayloadAction<Pick<CartProduct, 'id' | 'count'>>
+			action: PayloadAction<Pick<CardProduct, 'id' | 'count'>>
 		) {
 			if (action.payload.count === 0) {
 				state.products = state.products.filter(

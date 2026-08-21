@@ -1,11 +1,15 @@
 import { Card } from '../../../features/Card';
 import s from './CardList.module.css';
+import { memo } from 'react';
 
 type CardListProps = {
 	title: string;
 	products: Product[];
 };
-export const CardList = ({ title, products }: CardListProps) => {
+export const CardList = memo(function CardList({
+	title,
+	products,
+}: CardListProps) {
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
 	}
@@ -22,4 +26,4 @@ export const CardList = ({ title, products }: CardListProps) => {
 			</div>
 		</div>
 	);
-};
+});

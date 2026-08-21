@@ -105,7 +105,7 @@ declare global {
 		wight: string;
 	};
 
-	type CartProduct = Product & {
+	type CardProduct = Product & {
 		count: number;
 	};
 

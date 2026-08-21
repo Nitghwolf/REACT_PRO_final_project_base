@@ -1,19 +1,20 @@
 import classNames from 'classnames';
 import s from './Card.module.css';
 import { Link } from 'react-router-dom';
-import { LikeButton } from '../../../shared/ui/LikeButton';
+import { LikeButton } from '../../LikeButton';
 import { useAppSelector } from '../../../shared/store/utils';
 import { cartSelectors } from '../../../shared/store/slices/cart';
 import { useAddToCart } from '../../../shared/hooks/useAddToCart';
 import { Price } from '../../../shared/ui/Price';
 import { Button } from '../../../shared/ui/Button';
-import { CartCounter } from '../../CartCounter';
+import { CardCounter } from '../../CardCounter';
+import { memo } from 'react';
 
 type CardProps = {
 	product: Product;
 };
 
-export const Card = ({ product }: CardProps) => {
+export const Card = memo(function Card({ product }: CardProps) {
 	const { discount, price, name, tags, id, images } = product;
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 	const isProductInCart = cartProducts.some((p) => p.id === id);
@@ -54,7 +55,7 @@ export const Card = ({ product }: CardProps) => {
 				</div>
 			</Link>
 			{isProductInCart ? (
-				<CartCounter productId={id} />
+				<CardCounter productId={id} />
 			) : (
 				<Button
 					onclick={() => addProductToCart({ ...product, count: 1 })}
@@ -69,4 +70,4 @@ export const Card = ({ product }: CardProps) => {
 			)}
 		</article>
 	);
-};
+});

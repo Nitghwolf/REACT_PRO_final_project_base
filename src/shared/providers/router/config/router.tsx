@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-
 import { HomePage } from '../../../../pages/HomePage';
 import { ProductPage } from '../../../../pages/ProductPage';
 import { NotFoundPage } from '../../../../pages/NotFoundPage';
@@ -8,7 +7,7 @@ import { FavoritesPage } from '../../../../pages/FavoritesPage';
 import { App } from '../../../../app';
 import { SignUpPage } from '../../../../pages/SignUpPage';
 import { SignInPage } from '../../../../pages/SignInPage';
-import { CartPage } from '../../../../pages/CartPage';
+import { CardPage } from '../../../../pages/CartPage';
 
 export enum AppRoutes {
 	HOME = 'home',
@@ -55,7 +54,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: RoutePath.cart,
-				element: <CartPage />,
+				element: <CardPage />,
 			},
 			{
 				path: RoutePath.signup,
