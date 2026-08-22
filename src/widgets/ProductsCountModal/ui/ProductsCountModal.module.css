@@ -1,0 +1,33 @@
+.productsCountModal {
+    svg:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+}
+
+.cart-amount__table {
+    display: grid;
+    row-gap: 16px;
+}
+
+.cart-amount__table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-amount__table-title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.cart-amount__table-value {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.cart-amount__table-value-discount {
+    color: #f44336;
+}

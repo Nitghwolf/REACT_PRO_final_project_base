@@ -9,6 +9,7 @@ import { isLiked } from '../../../shared/utils';
 import { useProducts } from '../../../shared/store/hooks/useProducts';
 import { cartSelectors } from '../../../shared/store/slices/cart';
 import { useMemo } from 'react';
+import { ProductsCountModal } from '../../ProductsCountModal';
 
 export const Header = () => {
 	const { products } = useProducts();
@@ -62,6 +63,7 @@ export const Header = () => {
 					</Link>
 					{accessToken && (
 						<>
+							<ProductsCountModal />
 							<Link className={s['header__icons-menu-item']} to='/profile'>
 								<svg
 									viewBox='64 64 896 896'
