@@ -1,8 +1,8 @@
 import { useCount } from '../hooks/useCount';
 import s from './CardCounter.module.css';
 import classNames from 'classnames';
-import { Button } from '../../../shared/ui/Button';
-import { Input } from '../../../shared/ui/Input';
+import { Button } from 'shared/ui/Button';
+import { Input } from 'shared/ui/Input';
 import { memo } from 'react';
 
 type TCartCounter = {

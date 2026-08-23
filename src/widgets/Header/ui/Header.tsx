@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import s from './Header.module.css';
-import { Logo } from '../../../shared/ui/Logo';
-import { Search } from '../../../features/Search/ui/Search';
+import { Logo } from 'shared/ui/Logo';
+import { Search } from 'features/Search/ui/Search.tsx';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../../shared/store/utils';
-import { userSelectors } from '../../../shared/store/slices/user';
-import { isLiked } from '../../../shared/utils';
-import { useProducts } from '../../../shared/store/hooks/useProducts';
-import { cartSelectors } from '../../../shared/store/slices/cart';
+import { useAppSelector } from 'shared/store/utils.ts';
+import { userSelectors } from 'shared/store/slices/user.ts';
+import { isLiked } from 'shared/utils';
+import { useProducts } from 'shared/store/hooks/useProducts.ts';
+import { cartSelectors } from 'shared/store/slices/cart.ts';
 import { useMemo } from 'react';
 import { ProductsCountModal } from '../../ProductsCountModal';
 

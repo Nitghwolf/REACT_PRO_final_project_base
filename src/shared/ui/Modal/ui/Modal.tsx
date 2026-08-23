@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { type FC, useEffect, useRef } from 'react';
 import s from './Modal.module.css';
 
 interface ModalProps {

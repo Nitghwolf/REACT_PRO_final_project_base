@@ -1,9 +1,9 @@
 import s from './CardPage.module.css';
 import classNames from 'classnames';
-import { useAppSelector } from '../../../shared/store/utils';
-import { cartSelectors } from '../../../shared/store/slices/cart';
-import { CardAmount } from '../../../widgets/CardAmount';
-import { CardList } from '../../../widgets/CardList';
+import { useAppSelector } from 'shared/store/utils.ts';
+import { cartSelectors } from 'shared/store/slices/cart.ts';
+import { CardAmount } from 'widgets/CardAmount';
+import { CardList } from 'widgets/CardList';
 
 export const CardPage = () => {
 	const products = useAppSelector(cartSelectors.getCartProducts);

@@ -1,6 +1,6 @@
-import s from '../../../pages/CartPage/ui/CardPage.module.css';
+import s from 'pages/CartPage/ui/CardPage.module.css';
 import classNames from 'classnames';
-import { Button } from '../../../shared/ui/Button';
+import { Button } from 'shared/ui/Button';
 import { useMemo } from 'react';
 
 type CardAmountProps = {

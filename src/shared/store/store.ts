@@ -6,7 +6,8 @@ import { productsApi } from './api/productsApi';
 
 export const store = configureStore({
 	reducer: rootReducer,
-	devTools: process.env.NODE_ENV !== 'production',
+	// devTools: process.env.NODE_ENV !== 'production',
+	devTools: false,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			thunk: {

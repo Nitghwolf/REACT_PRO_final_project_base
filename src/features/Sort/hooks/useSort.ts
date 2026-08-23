@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from '../../../shared/store/utils';
+import { useAppDispatch, useAppSelector } from 'shared/store/utils.ts';
 import {
 	productsActions,
 	productsSelectors,
-} from '../../../shared/store/slices/products';
+} from 'shared/store/slices/products.ts';
 
 interface SortParams {
 	title: string;

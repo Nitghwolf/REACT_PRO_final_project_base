@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { type FC, useEffect, useRef } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -10,45 +10,37 @@ import {
 	Typography,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpFormValues } from '../utils/types';
+import type { SignUpFormValues } from '../utils/types';
 import { signUpFormSchema } from '../utils/validator';
-import { userActions } from '../../../shared/store/slices/user';
-import { getMessageFromError } from '../../../shared/utils';
-import { useSignUpMutation } from '../../../shared/store/api/authApi';
+import { userActions } from 'shared/store/slices/user.ts';
+import { getMessageFromError } from 'shared/utils';
+import { useSignUpMutation } from 'shared/store/api/authApi.ts';
 
 export const SignUpForm: FC = () => {
 	const dispatch = useDispatch();
-	// navigate поможет сделать редирект в нужный момент
 	const navigate = useNavigate();
-	// Из хука useSignUpMutation (был получен путем автогенерации)
-	// достаем функцию, которая будет (регистрировать пользователя) делать POST-запрос к нашем серверу)
+
 	const [signUpRequestFn] = useSignUpMutation();
-	// инициализируем react-hook-form
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const {
-		// control понадобиться, чтобы подружить react-hook-form и компоненты из MUI
 		control,
 		handleSubmit,
 		formState: { errors, isValid, isSubmitting, isSubmitted },
-		// с помощью generic подсказываем react-hook-form, какие поля содержит наша форма
 	} = useForm<SignUpFormValues>({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
-		// react-hook-form умеет работать со многими библиотеками
-		// валидации, мы используем yup
+		// @ts-ignore
 		resolver: yupResolver(signUpFormSchema),
 	});
 
 	const submitHandler: SubmitHandler<SignUpFormValues> = async (values) => {
 		try {
-			// метод "unwrap" помогает убрать вспомогательные обертки
-			// RTK, которые обрабатывают ошибки. Теперь ошибки обрабатываем мы
-			// с помощью конструкции try...catch. В этом случае нам так удобней
 			const response = await signUpRequestFn(values).unwrap();
 
 			dispatch(userActions.setUser(response.user));
@@ -56,13 +48,9 @@ export const SignUpForm: FC = () => {
 				userActions.setAccessToken({ accessToken: response.accessToken })
 			);
 
-			// Выводим уведомление, что пользователь успешно зарегался
-			// Есть куча библиотек для отображения "Тостеров". Мы используем
-			// react-toastify — https://github.com/fkhadra/react-toastify#readme
 			toast.success('Вы успешно зарегистрированы!');
 			navigate('/');
 		} catch (error) {
-			// Если произошла ошибка, то выводим уведомление
 			console.log({ error });
 			toast.error(
 				getMessageFromError(
@@ -73,6 +61,10 @@ export const SignUpForm: FC = () => {
 		}
 	};
 
+	useEffect(() => {
+		inputRef.current?.focus();
+	}, []);
+
 	return (
 		<Container component='main' maxWidth='xs' style={{ height: '100%' }}>
 			<Box
@@ -82,9 +74,7 @@ export const SignUpForm: FC = () => {
 					flexDirection: 'column',
 					alignItems: 'center',
 				}}>
-				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-					<LockOutlinedIcon />
-				</Avatar>
+				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
 				<Typography component='h1' variant='h5'>
 					Sign Up
 				</Typography>
@@ -110,6 +100,8 @@ export const SignUpForm: FC = () => {
 								error={!!errors.email?.message}
 								helperText={errors.email?.message}
 								{...field}
+								ref={inputRef}
+								autoFocus={true}
 							/>
 						)}
 					/>
@@ -132,8 +124,6 @@ export const SignUpForm: FC = () => {
 
 					<LoadingButton
 						type='submit'
-						// кнопка становится недоступной после первой валидации (если есть ошибки)
-						// или когда выполняется отправка (чтобы не дать пользователю отправить форму несколько раз)
 						disabled={isSubmitted && (!isValid || isSubmitting)}
 						loading={isSubmitting}
 						fullWidth

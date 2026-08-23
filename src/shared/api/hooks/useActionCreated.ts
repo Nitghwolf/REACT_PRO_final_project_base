@@ -1,6 +1,6 @@
 import {
-	ActionCreatorsMapObject,
-	AsyncThunk,
+	type ActionCreatorsMapObject,
+	type AsyncThunk,
 	bindActionCreators,
 } from '@reduxjs/toolkit';
 import { useMemo } from 'react';

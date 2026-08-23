@@ -1,4 +1,4 @@
-import { Card } from '../../../features/Card';
+import { Card } from 'features/Card';
 import s from './CardList.module.css';
 import { memo } from 'react';
 

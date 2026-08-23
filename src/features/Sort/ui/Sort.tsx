@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent, useCallback } from 'react';
 import { useSort } from '../hooks/useSort';
 import s from './Sort.module.css';
 

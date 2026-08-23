@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import {
 	Avatar,
 	Box,
@@ -7,18 +7,17 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { toast } from 'react-toastify';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { SignInFormValues } from '../utils/types';
+import type { SignInFormValues } from '../utils/types';
 import { signInFormSchema } from '../utils/validator';
-import { useSignInMutation } from '../../../shared/store/api/authApi';
-import { userActions } from '../../../shared/store/slices/user';
-import { getMessageFromError } from '../../../shared/utils';
+import { useSignInMutation } from 'shared/store/api/authApi.ts';
+import { userActions } from 'shared/store/slices/user.ts';
+import { getMessageFromError } from 'shared/utils';
 
 export const SignInForm: FC = () => {
 	const dispatch = useDispatch();
@@ -35,6 +34,7 @@ export const SignInForm: FC = () => {
 			email: '',
 			password: '',
 		},
+		// @ts-ignore
 		resolver: yupResolver(signInFormSchema),
 	});
 
@@ -72,9 +72,7 @@ export const SignInForm: FC = () => {
 					flexDirection: 'column',
 					alignItems: 'center',
 				}}>
-				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-					<LockOutlinedIcon />
-				</Avatar>
+				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
 				<Typography component='h1' variant='h5'>
 					Sign In
 				</Typography>
@@ -99,6 +97,7 @@ export const SignInForm: FC = () => {
 								autoComplete='email'
 								error={!!errors.email?.message}
 								helperText={errors.email?.message}
+								autoFocus={true}
 								{...field}
 							/>
 						)}
